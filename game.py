@@ -20,3 +20,32 @@ font = pygame.font.SysFont("Ohno Soft", 40)
 
 # make button
 button_rect = pygame.Rect(200, 200, 200, 100)
+
+# main game loop
+running = True
+while running:
+    mouse_pos = pygame.mouse.get_pos()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if button_rect.collidepoint(mouse_pos):
+                grass_touched += 1
+
+    # Fill the screen with white
+    screen.fill(WHITE)
+
+    # Draw the button
+    button_color = HOVER_BLUE if button_rect.collidepoint(mouse_pos) else BLUE
+    pygame.draw.rect(screen, button_color, button_rect)
+
+    # Draw the text
+    text = font.render(f"Grass Touched: {grass_touched}", True, BLACK)
+    screen.blit(text, (WIDTH // 2 - text.get_width() // 2, 100))
+
+    # Update the display
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+sys.exit()
